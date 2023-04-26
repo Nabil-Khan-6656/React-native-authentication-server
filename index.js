@@ -13,7 +13,7 @@ const requireToken = require('./middleware/Auth')
 app.use(bodyParser.json())
 app.use(authRoutes)
 
-app.get('/', requireToken ,(req,res)=>{
+app.get('/' ,(req,res)=>{
     res.send('Home Page')
 })
 
