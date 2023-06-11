@@ -116,11 +116,6 @@ router.post('/verify', async (req, res) => {
 })
 
 async function mailer(reciveremail, code) {
-    // Generate test SMTP service account from ethereal.email
-    // Only needed if you don't have a real mail account for testing
-    // let testAccount = await nodemailer.createTestAccount();
-
-    // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
@@ -132,7 +127,6 @@ async function mailer(reciveremail, code) {
         },
     });
 
-    // send mail with defined transport object
     let info = {
         from: 'nabilpathan9624@gmail.com', // sender address
         to: `${reciveremail}`, // list of receivers
@@ -142,15 +136,22 @@ async function mailer(reciveremail, code) {
     };
 
 
-    await transporter.sendMail(info, (err) => {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            console.log("Email has Sent");
-        }
+    await new Promise((resolve , reject)=>{
+        transporter.sendMail(info, (err) => {
+            if (err) {
+                console.log(err);
+                reject(err)
+            }
+            else {
+                console.log("Email has Sent");
+                resolve(info)
+            }
+        })
     })
+   
 
 }
+
+
 module.exports = router
 
