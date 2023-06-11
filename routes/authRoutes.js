@@ -118,7 +118,7 @@ router.post('/verify', async (req, res) => {
 async function mailer(reciveremail, code) {
     // Generate test SMTP service account from ethereal.email
     // Only needed if you don't have a real mail account for testing
-    let testAccount = await nodemailer.createTestAccount();
+    // let testAccount = await nodemailer.createTestAccount();
 
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
@@ -128,21 +128,21 @@ async function mailer(reciveremail, code) {
         requireTLS: true,
         auth: {
             user: "nabilpathan9624@gmail.com", // generated ethereal user
-            pass: "bhcovmhroecfjanj", // generated ethereal password
+            pass: "oqhcrizcavlpxvom", // generated ethereal password
         },
     });
 
     // send mail with defined transport object
-    let info = await transporter({
+    let info = {
         from: 'nabilpathan9624@gmail.com', // sender address
         to: `${reciveremail}`, // list of receivers
         subject: "Signup Verification", // Subject line
         text: "Verify your account", // plain text body
         html: `<b>Your verification code is ${code}</b>`, // html body
-    });
+    };
 
 
-    transporter.sendMail(info, (err) => {
+    await transporter.sendMail(info, (err) => {
         if (err) {
             console.log(err);
         }

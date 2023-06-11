@@ -7,9 +7,10 @@ require('./db')
 const authRoutes = require('./routes/authRoutes')
 require('./models/User')
 const requireToken = require('./middleware/Auth')
+const cors = require('cors')
 
 
-
+app.use(cors())
 app.use(bodyParser.json())
 app.use(authRoutes)
 
